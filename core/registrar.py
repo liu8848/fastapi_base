@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Depends
 from asgi_correlation_id import CorrelationIdMiddleware
 from common.log import setup_logging, set_customize_logfile
 from core.conf import settings
@@ -33,7 +33,7 @@ def register_app():
     # register_middleware(app)
 
     # 路由
-    # register_router(app)
+    register_router(app)
 
     return app
 
@@ -54,5 +54,9 @@ def register_middleware(app: FastAPI):
     app.add_middleware(CorrelationIdMiddleware, validator=False)
 
 
-# def register_router(app: FastAPI):
-
+def register_router(app: FastAPI):
+    """
+    路由配置
+    """
+    from app.router import router as app_router
+    app.include_router(app_router)

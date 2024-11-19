@@ -8,11 +8,6 @@ from core.registrar import register_app
 app = register_app()
 
 
-@app.get("/hello")
-async def hello():
-    return {"message": "Hello World"}
-
-
 if __name__ == '__main__':
 
     try:
