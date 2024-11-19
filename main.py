@@ -1,6 +1,10 @@
-from fastapi import FastAPI
+from pathlib import Path
+
 import uvicorn
-app = FastAPI()
+
+from core.registrar import register_app
+
+app = register_app()
 
 
 @app.get("/hello")
@@ -10,4 +14,9 @@ async def hello():
 
 if __name__ == '__main__':
 
-    uvicorn.run(app, host='0.0.0.0', port=8000)
+    try:
+        config = uvicorn.Config(app=f'{Path(__file__).stem}:app', reload=True)
+        server = uvicorn.Server(config)
+        server.run()
+    except Exception as e:
+        raise e
