@@ -23,14 +23,6 @@ class Settings(BaseSettings):
 
     # 日志配置
     LOG_ROOT_LEVEL: str = 'NOTSET'
-    # LOG_STD_FORMAT: str = (
-    #     '<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <lvl>{level: <8}</lvl>} | '
-    #     '<cyan> {correlation_id} </cyan> | <lvl>{message}</lvl>'
-    # )
-    # LOG_FILE_FORMAT: str = (
-    #     '<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</> | <lvl>{level: <8}</> | '
-    #     '<cyan> {correlation_id} </> | <lvl>{message}</>'
-    # )
     LOG_STD_FORMAT: str = (
         '<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</> | <lvl>{level: <8}</> | '
         '<cyan> {correlation_id} </> | <lvl>{message}</>'

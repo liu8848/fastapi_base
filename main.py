@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 import uvicorn
@@ -18,5 +19,7 @@ if __name__ == '__main__':
         config = uvicorn.Config(app=f'{Path(__file__).stem}:app', reload=True)
         server = uvicorn.Server(config)
         server.run()
+    except KeyboardInterrupt as e:
+        logging.info("server shout down!")
     except Exception as e:
         raise e
