@@ -1,5 +1,7 @@
-from fastapi import FastAPI,Depends
+from fastapi import FastAPI
 from asgi_correlation_id import CorrelationIdMiddleware
+
+from common.exception.exception_handler import register_exception
 from common.log import setup_logging, set_customize_logfile
 from core.conf import settings
 from contextlib import asynccontextmanager
@@ -13,7 +15,6 @@ async def register_init(app: FastAPI):
     :return:
     """
     yield
-
 
 
 def register_app():
@@ -34,6 +35,9 @@ def register_app():
 
     # 路由
     register_router(app)
+
+    # 异常处理
+    register_exception(app)
 
     return app
 

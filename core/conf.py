@@ -38,6 +38,13 @@ class Settings(BaseSettings):
     LOG_STDOUT_FILENAME: str = 'info.log'
     LOG_STDERR_FILENAME: str = 'error.log'
 
+    # Trace ID
+    TRACE_ID_REQUEST_HEADER_KEY: str = 'X-Request-ID'
+
+    # DATETIME格式化模版
+    DATETIME_FORMAT: str = '%Y-%m-%d %H:%M:%S'
+    DATETIME_TIMEZONE: str = 'Asia/Shanghai'
+
 
 @lru_cache
 def get_settings() -> Settings:
