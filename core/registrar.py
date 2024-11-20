@@ -31,7 +31,7 @@ def register_app():
     register_logger()
 
     # 配置中间件
-    # register_middleware(app)
+    register_middleware(app)
 
     # 路由
     register_router(app)
@@ -50,12 +50,24 @@ def register_logger() -> None:
 
 def register_middleware(app: FastAPI):
     """
-    中间件执行顺序，从上到下
+    中间件执行顺序，从下到上
     :param app:
     :return:
     """
     # Trace ID (required) 生成http请求唯一id
     app.add_middleware(CorrelationIdMiddleware, validator=False)
+
+    # 添加跨域处理中间件(要保持在最下层)
+    if settings.MIDDLEWARE_CORS:
+        from fastapi.middleware.cors import CORSMiddleware
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=['*'],
+            allow_credentials=True,
+            allow_methods=['*'],
+            allow_headers=['*'],
+            # expose_headers=settings.CORS_EXPOSE_HEADERS,
+        )
 
 
 def register_router(app: FastAPI):

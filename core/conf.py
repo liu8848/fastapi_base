@@ -41,6 +41,16 @@ class Settings(BaseSettings):
     # Trace ID
     TRACE_ID_REQUEST_HEADER_KEY: str = 'X-Request-ID'
 
+    # Middleware
+    MIDDLEWARE_CORS: bool = True
+    MIDDLEWARE_ACCESS: bool = True
+    # CORS
+    # CORS_ALLOWED_ORIGINS = [
+    #     '*',
+    # ]
+    # CORS_EXPOSE_HEADERS = [
+    #     TRACE_ID_REQUEST_HEADER_KEY,
+    # ]
     # DATETIME格式化模版
     DATETIME_FORMAT: str = '%Y-%m-%d %H:%M:%S'
     DATETIME_TIMEZONE: str = 'Asia/Shanghai'
