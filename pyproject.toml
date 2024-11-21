@@ -9,6 +9,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 
 dependencies = [
+    "alembic>=1.14.0",
     "asgi-correlation-id>=4.3.3",
     "asyncmy>=0.2.9",
     "fastapi[all]==0.111.0",

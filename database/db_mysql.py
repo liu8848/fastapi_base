@@ -1,6 +1,8 @@
 import sys
 
 from typing import Annotated
+from uuid import uuid4
+
 from fastapi import Depends
 from sqlalchemy import URL
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession,async_sessionmaker
@@ -45,3 +47,8 @@ async def create_table():
     """创建数据库"""
     async with async_engine.begin() as conn:
         await conn.run_sync(MappedBase.metadata.create_all)
+
+
+def uuid4_str() -> str:
+    """数据库引擎 UUID 类型兼容性解决方案"""
+    return str(uuid4())

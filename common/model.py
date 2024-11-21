@@ -1,18 +1,23 @@
-import datetime
+from datetime import datetime
 from typing import Annotated
 
+from sqlalchemy import String
 from sqlalchemy.orm import Mapped,mapped_column,DeclarativeBase,declared_attr,MappedAsDataclass
 
 from utils.snowflake_generator import generate_unique_id
 from utils.timezone import timezone
 
 str_id_key=Annotated[
-    str,mapped_column(primary_key=True,index=True,comment="主键id",default=generate_unique_id)
+    str,mapped_column(String(32),primary_key=True,index=True,comment="主键id",default=generate_unique_id)
+]
+
+id_key = Annotated[
+    int, mapped_column(primary_key=True, index=True, autoincrement=True, sort_order=-999, comment='主键id')
 ]
 
 class UserMixin(MappedAsDataclass):
-    create_user:Mapped[str]=mapped_column(comment='创建人',default='admin')
-    update_user:Mapped[str]=mapped_column(comment='修改人',default='admin')
+    create_user:Mapped[str]=mapped_column(String(20),comment='创建人',default='admin',init=False)
+    update_user:Mapped[str]=mapped_column(String(20),comment='修改人',default='admin',init=False)
 
 class DatetimeMixin(MappedAsDataclass):
     create_time:Mapped[datetime]=mapped_column(
