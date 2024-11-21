@@ -6,6 +6,8 @@ from common.log import setup_logging, set_customize_logfile
 from core.conf import settings
 from contextlib import asynccontextmanager
 
+from database.db_mysql import create_table
+
 
 @asynccontextmanager
 async def register_init(app: FastAPI):
@@ -14,6 +16,9 @@ async def register_init(app: FastAPI):
     :param app:
     :return:
     """
+    # 创建数据库表
+    await  create_table()
+
     yield
 
 

@@ -13,6 +13,12 @@ class Settings(BaseSettings):
     # 环境配置
     ENVIRONMENT: Literal['dev', 'pro']
 
+    # Env MySQL
+    MYSQL_HOST: str
+    MYSQL_PORT: str
+    MYSQL_USER: str
+    MYSQL_PASSWORD: str
+
     # Fast API 基础设置
     FASTAPI_API_V1_PATH: str = '/api/v1'
     FASTAPI_TITLE: str = 'FastAPI'
@@ -54,6 +60,12 @@ class Settings(BaseSettings):
     # DATETIME格式化模版
     DATETIME_FORMAT: str = '%Y-%m-%d %H:%M:%S'
     DATETIME_TIMEZONE: str = 'Asia/Shanghai'
+
+
+    # MySQL
+    MYSQL_ECHO: bool = True
+    MYSQL_DATABASE: str = 'testdb'
+    MYSQL_CHARSET: str = 'utf8mb4'
 
 
 @lru_cache
