@@ -1,10 +1,11 @@
 import inspect
 import logging
 import os
-from sys import stdout,stderr
 
-from loguru import logger
+from sys import stderr, stdout
+
 from asgi_correlation_id import correlation_id
+from loguru import logger
 
 from core import path_conf
 from core.conf import settings
@@ -42,7 +43,7 @@ def setup_logging():
 
     def correlation_id_filter(record) -> bool:
         cid = correlation_id.get(settings.LOG_CID_DEFAULT_VALUE)
-        record['correlation_id'] = cid[:settings.LOG_CID_UUID_LENGTH]
+        record['correlation_id'] = cid[: settings.LOG_CID_UUID_LENGTH]
         return True
 
     logger.configure(

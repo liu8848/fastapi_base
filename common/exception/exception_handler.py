@@ -1,32 +1,33 @@
-from fastapi import FastAPI,Request
+from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from starlette.exceptions import HTTPException
-from uvicorn.protocols.http.h11_impl import STATUS_PHRASES
 from pydantic import ValidationError
 from pydantic.errors import PydanticUserError
+from starlette.exceptions import HTTPException
+from uvicorn.protocols.http.h11_impl import STATUS_PHRASES
 
 from common.exception.errors import BaseExceptionMixin
 from common.response.response_code import StandardResponseCode
-from core.conf import settings
-from common.response.response_schema import response_base
-from common.response.response_schema import CustomResponse,CustomResponseCode
-from utils.serializer import MsgSpecJSONResponse
-from utils.trace_id import get_request_trace_id
+from common.response.response_schema import CustomResponseCode, response_base
 from common.schema import (
     CUSTOM_USAGE_ERROR_MESSAGES,
     CUSTOM_VALIDATION_ERROR_MESSAGES,
 )
+from core.conf import settings
+from utils.serializer import MsgSpecJSONResponse
+from utils.trace_id import get_request_trace_id
 
-def _get_exception_code(status_code:int):
+
+def _get_exception_code(status_code: int):
     try:
         STATUS_PHRASES[status_code]
     except Exception:
-        code=StandardResponseCode.HTTP_400
+        code = StandardResponseCode.HTTP_400
     else:
-        code=status_code
+        code = status_code
     return code
 
-async def _validation_exception_handler(request: Request, e:RequestValidationError|ValidationError):
+
+async def _validation_exception_handler(request: Request, e: RequestValidationError | ValidationError):
     """
     数据验证异常处理
     :param request:
@@ -68,7 +69,7 @@ async def _validation_exception_handler(request: Request, e:RequestValidationErr
     return MsgSpecJSONResponse(status_code=422, content=content)
 
 
-def register_exception(app:FastAPI):
+def register_exception(app: FastAPI):
     @app.exception_handler(HTTPException)
     async def http_exception_handler(request: Request, exc: HTTPException):
         """
@@ -78,15 +79,11 @@ def register_exception(app:FastAPI):
         :return:
         """
         if settings.ENVIRONMENT == 'dev':
-            content={
-                'code': exc.status_code,
-                'msg': exc.detail,
-                'data':None
-            }
+            content = {'code': exc.status_code, 'msg': exc.detail, 'data': None}
         else:
-            res=response_base.fail(res=CustomResponseCode.HTTP_400)
-            content=res.model_dump()
-        request.state.__request_http_exception__=content
+            res = response_base.fail(res=CustomResponseCode.HTTP_400)
+            content = res.model_dump()
+        request.state.__request_http_exception__ = content
         content.update(trace_id=get_request_trace_id(request))
         return MsgSpecJSONResponse(
             status_code=_get_exception_code(exc.status_code),
@@ -95,14 +92,14 @@ def register_exception(app:FastAPI):
         )
 
     @app.exception_handler(RequestValidationError)
-    async def fastapi_validation_exception_handler(request:Request,exc:RequestValidationError):
+    async def fastapi_validation_exception_handler(request: Request, exc: RequestValidationError):
         """
         fastapi 数据验证异常管理
         :param request:
         :param exc:
         :return:
         """
-        return await  _validation_exception_handler(request, exc)
+        return await _validation_exception_handler(request, exc)
 
     @app.exception_handler(ValidationError)
     async def pydantic_validation_exception_handler(request: Request, exc: ValidationError):

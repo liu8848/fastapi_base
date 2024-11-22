@@ -1,11 +1,11 @@
-from fastapi import FastAPI
-from asgi_correlation_id import CorrelationIdMiddleware
-
-from common.exception.exception_handler import register_exception
-from common.log import setup_logging, set_customize_logfile
-from core.conf import settings
 from contextlib import asynccontextmanager
 
+from asgi_correlation_id import CorrelationIdMiddleware
+from fastapi import FastAPI
+
+from common.exception.exception_handler import register_exception
+from common.log import set_customize_logfile, setup_logging
+from core.conf import settings
 from database.db_mysql import create_table
 
 
@@ -17,7 +17,7 @@ async def register_init(app: FastAPI):
     :return:
     """
     # 创建数据库表
-    await  create_table()
+    await create_table()
 
     yield
 
@@ -65,6 +65,7 @@ def register_middleware(app: FastAPI):
     # 添加跨域处理中间件(要保持在最下层)
     if settings.MIDDLEWARE_CORS:
         from fastapi.middleware.cors import CORSMiddleware
+
         app.add_middleware(
             CORSMiddleware,
             allow_origins=['*'],
@@ -80,4 +81,5 @@ def register_router(app: FastAPI):
     路由配置
     """
     from app.router import router as app_router
+
     app.include_router(app_router)

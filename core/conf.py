@@ -1,5 +1,5 @@
-from typing import Literal
 from functools import lru_cache
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -60,7 +60,6 @@ class Settings(BaseSettings):
     # DATETIME格式化模版
     DATETIME_FORMAT: str = '%Y-%m-%d %H:%M:%S'
     DATETIME_TIMEZONE: str = 'Asia/Shanghai'
-
 
     # MySQL
     MYSQL_ECHO: bool = True

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class CustomCodeBase(Enum):
     """自定义状态码基类"""
 
@@ -17,7 +18,7 @@ class CustomCodeBase(Enum):
 class CustomResponseCode(CustomCodeBase):
     """自定义响应状态码"""
 
-    HTTP_200=(200,'请求成功')
+    HTTP_200 = (200, '请求成功')
     HTTP_201 = (201, '新建请求成功')
     HTTP_202 = (202, '请求已接受，但处理尚未完成')
     HTTP_204 = (204, '请求成功，但没有返回内容')
@@ -34,14 +35,16 @@ class CustomResponseCode(CustomCodeBase):
     HTTP_503 = (503, '服务器暂时无法处理请求')
     HTTP_504 = (504, '网关超时')
 
+
 class CustomErrorCode(CustomCodeBase):
-    CAPTCHA_ERROR=(40001,'验证码错误')
+    CAPTCHA_ERROR = (40001, '验证码错误')
 
 
 class CustomResponse:
     """可自定义返回信息的类"""
-    code:int
-    msg:str
+
+    code: int
+    msg: str
 
 
 class StandardResponseCode:

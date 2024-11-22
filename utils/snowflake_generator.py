@@ -1,5 +1,5 @@
-import time
 import threading
+import time
 
 
 class SnowflakeGenerator:
@@ -39,20 +39,25 @@ class SnowflakeGenerator:
             timestamp = self._current_milliseconds()
 
             if timestamp < self.last_timestamp:
-                raise ValueError("Clock moved backwards. Refusing to generate id.")
+                raise ValueError('Clock moved backwards. Refusing to generate id.')
 
             if timestamp == self.last_timestamp:
                 self.sequence = (self.sequence + 1) & self.max_sequence
-                if self.sequence==0:
-                    timestamp=self._til_next_millis(self.last_timestamp)
+                if self.sequence == 0:
+                    timestamp = self._til_next_millis(self.last_timestamp)
             else:
-                self.sequence=0
+                self.sequence = 0
             self.last_timestamp = timestamp
 
-            return ((timestamp-1288834974657) << self.timestamp_shift) | (self.datacenter_id << self.datacenter_id_shift) | (self.worker_id << self.worker_id_shift) |self.sequence
+            return (
+                ((timestamp - 1288834974657) << self.timestamp_shift)
+                | (self.datacenter_id << self.datacenter_id_shift)
+                | (self.worker_id << self.worker_id_shift)
+                | self.sequence
+            )
 
-def generate_unique_id(prefix:str|None = '',datacenter_id:int|None=1,worker_id:int|None=1)->str:
 
+def generate_unique_id(prefix: str | None = '', datacenter_id: int | None = 1, worker_id: int | None = 1) -> str:
     generator = SnowflakeGenerator(datacenter_id, worker_id)
     snowflake_id = generator.generate_id()
     return f'{prefix}{snowflake_id}'

@@ -19,3 +19,15 @@ dependencies = [
     "pydantic>=2.9.1",
     "sqlalchemy>=2.0.30",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.0",
+    "pytest>=0.7.0",
+]
+lint = [
+    "ruff>=0.7.0",
+]
+
+[tool.uv]
+default-groups=["dev","lint"]
