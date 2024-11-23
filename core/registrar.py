@@ -33,7 +33,7 @@ def register_app():
     )
 
     # 日志配置
-    register_logger()
+    # register_logger()
 
     # 配置中间件
     register_middleware(app)

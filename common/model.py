@@ -17,16 +17,16 @@ id_key = Annotated[
 
 
 class UserMixin(MappedAsDataclass):
-    create_user: Mapped[str] = mapped_column(String(20), comment='创建人', default='admin', init=False)
-    update_user: Mapped[str] = mapped_column(String(20), comment='修改人', default='admin', init=False)
+    create_user: Mapped[str] = mapped_column(String(20), comment='创建人', default='admin', init=False,nullable=True)
+    update_user: Mapped[str] = mapped_column(String(20), comment='修改人', default='admin', init=False,nullable=True)
 
 
 class DatetimeMixin(MappedAsDataclass):
     create_time: Mapped[datetime] = mapped_column(
-        init=False, default_factory=timezone.now, sort_order=999, comment='创建时间'
+        init=False, default_factory=timezone.now, sort_order=999, comment='创建时间',nullable=True
     )
     update_time: Mapped[datetime] = mapped_column(
-        init=False, onupdate=timezone.now(), sort_order=999, comment='更新时间'
+        init=False, onupdate=timezone.now(), sort_order=999, comment='更新时间',nullable=True
     )
 
 

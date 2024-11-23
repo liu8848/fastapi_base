@@ -30,4 +30,6 @@ lint = [
 ]
 
 [tool.uv]
+package = false
+python-downloads = "manual"
 default-groups=["dev","lint"]
