@@ -4,7 +4,7 @@ from asgi_correlation_id import CorrelationIdMiddleware
 from fastapi import FastAPI
 
 from common.exception.exception_handler import register_exception
-from common.log import set_customize_logfile, setup_logging
+from common.log.loguru_cofig import Loggers
 from core.conf import settings
 from database.db_mysql import create_table
 
@@ -33,7 +33,7 @@ def register_app():
     )
 
     # 日志配置
-    # register_logger()
+    register_logger()
 
     # 配置中间件
     register_middleware(app)
@@ -49,8 +49,7 @@ def register_app():
 
 def register_logger() -> None:
     """配置日志"""
-    setup_logging()
-    set_customize_logfile()
+    Loggers.init_config()
 
 
 def register_middleware(app: FastAPI):

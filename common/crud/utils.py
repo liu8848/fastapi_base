@@ -1,9 +1,4 @@
-from typing import Type, Any
 
-from sqlalchemy import ColumnElement
-from sqlalchemy.orm.util import AliasedClass
-
-from common.crud.types import Model
 
 _SUPPORTED_FILTERS = {
     # Comparison: https://docs.sqlalchemy.org/en/20/core/operators.html#comparison-operators

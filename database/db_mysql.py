@@ -7,7 +7,7 @@ from fastapi import Depends
 from sqlalchemy import URL
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from common.log import log
+from common.log.loguru_cofig import log
 from common.model import MappedBase
 from core.conf import settings
 

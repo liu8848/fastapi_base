@@ -1,10 +1,10 @@
 
 
-
 from common.schema import SchemaBase
 
+
 class AuthSchemaBase(SchemaBase):
-    username:str
+    username: str
 
 
 class RegisterUserParam(AuthSchemaBase):
