@@ -83,7 +83,7 @@ class CRUDBase(Generic[Model]):
             await session.commit()
         return ins_list
 
-    async def select_model(self, session: AsyncSession, pk: int) -> Model | None:
+    async def select_model(self, session: AsyncSession, pk: str) -> Model | None:
         """
         通过主键查询数据
         @param session: SQLAlchemy 异步事务管理器

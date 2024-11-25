@@ -9,6 +9,7 @@ from typing import cast
 from loguru import logger
 
 from core import path_conf
+from core.conf import settings
 
 
 class Logger:
@@ -31,22 +32,11 @@ class Logger:
         # 日志输出格式
 
         # 控制台输出格式
-        self.logger.add(sys.stdout,
-                        format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | "  # 颜色>时间
-                               "{process.name} | "  # 进程名
-                               "{thread.name} | "  # 进程名
-                               "<cyan>{module}</cyan>.<cyan>{function}</cyan>"  # 模块名.方法名
-                               ":<cyan>{line}</cyan> | "  # 行号
-                               "<level>{level}</level>: "  # 等级
-                               "<level>{message}</level>",  # 日志内容
-                        )
+        self.logger.add(sys.stdout,format=settings.LOGURU_STD_FORMAT,)
 
         # info日志写入文件
         self.logger.add(info_log_path,  # 写入目录指定文件
-                        format='{time:YYYY-MM-DD HH:mm:ss} - '  # 时间
-                               "{process.name} | "  # 进程名
-                               "{thread.name} | "  # 进程名
-                               '{module}.{function}:{line} - {level} -{message}',  # 模块名.方法名:行号
+                        format=settings.LOGURU_FILE_FORMAT,
                         encoding='utf-8',
                         retention='7 days',  # 设置历史保留时长
                         backtrace=True,  # 回溯
@@ -61,10 +51,7 @@ class Logger:
 
         # error日志写入文件
         self.logger.add(error_log_path,
-                        format='{time:YYYY-MM-DD HH:mm:ss} - '  # 时间
-                               "{process.name} | "  # 进程名
-                               "{thread.name} | "  # 进程名
-                               '{module}.{function}:{line} - {level} -{message}',  # 模块名.方法名:行号
+                        format=settings.LOGURU_FILE_FORMAT,
                         encoding='utf-8',
                         retention='7 days',  # 设置历史保留时长
                         backtrace=True,  # 回溯

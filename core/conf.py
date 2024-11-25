@@ -44,6 +44,23 @@ class Settings(BaseSettings):
     LOG_STDOUT_FILENAME: str = 'info.log'
     LOG_STDERR_FILENAME: str = 'error.log'
 
+    # loguru日志配置
+    LOGURU_STD_FORMAT: str = (
+        "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | "  # 颜色>时间
+        "{process.name} | "  # 进程名
+        "{thread.name} | "  # 进程名
+        "<cyan>{module}</cyan>.<cyan>{function}</cyan>"  # 模块名.方法名
+        ":<cyan>{line}</cyan> | "  # 行号
+        "<level>{level}</level>: "  # 等级
+        "<level>{message}</level>"  # 日志内容
+    )
+    LOGURU_FILE_FORMAT: str = (
+        '{time:YYYY-MM-DD HH:mm:ss} - '  # 时间
+        "{process.name} | "  # 进程名
+        "{thread.name} | "  # 进程名
+        '{module}.{function}:{line} - {level} -{message}'  # 模块名.方法名:行号
+    )
+
     # Trace ID
     TRACE_ID_REQUEST_HEADER_KEY: str = 'X-Request-ID'
 
