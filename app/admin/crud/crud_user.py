@@ -25,4 +25,15 @@ class CRUDUser(CRUDBase[User]):
         db.add(new_user)
 
 
+    async def get(self, db: AsyncSession, user_id: str) -> User | None:
+        """
+        获取用户
+
+        :param db:
+        :param user_id:
+        :return:
+        """
+        return await self.select_model(db, user_id)
+
+
 user_dao: CRUDUser = CRUDUser(User)

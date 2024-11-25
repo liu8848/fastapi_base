@@ -1,6 +1,6 @@
-from typing import Generic, Iterable, Type
+from typing import Any, Generic, Iterable, Sequence, Type
 
-from sqlalchemy import inspect, select
+from sqlalchemy import Row, RowMapping, Select, delete, inspect, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from common.crud.errors import *
@@ -92,7 +92,7 @@ class CRUDBase(Generic[Model]):
         """
         stmt = select(self.model).where(self.primary_key == pk)
         query = await session.execute(stmt)
-        return query.scalar().first()
+        return query.scalars().first()
 
     async def select_model_by_column(self, session: AsyncSession, **kwargs) -> Model | None:
         """

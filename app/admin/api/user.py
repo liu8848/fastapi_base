@@ -1,5 +1,6 @@
+from typing import Annotated
 
-from fastapi import APIRouter
+from fastapi import APIRouter,Path
 
 from app.admin.schema.user import RegisterUserParam
 from app.admin.service.user_service import user_service
@@ -15,8 +16,8 @@ async def register_user(obj: RegisterUserParam) -> ResponseModel:
     await user_service.register(obj=obj)
     return response_base.success()
 
-@router.get("/get_userinfo",summary='获取用户信息')
-async def get_userinfo(id:str) -> ResponseModel:
+@router.get('/get_userinfo/{id}',summary='获取用户信息')
+async def get_userinfo(id:Annotated[str,Path(...)]) -> ResponseModel:
     user=await user_service.get_userinfo(id)
     data=UserInfoSchemaBase(**select_as_dict(user))
     return response_base.success(data=data)

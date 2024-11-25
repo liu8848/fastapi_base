@@ -13,7 +13,7 @@ class RegisterUserParam(AuthSchemaBase):
 class UserInfoSchemaBase(SchemaBase):
     id:str
     username: str
-    create_name:str
-    create_time:datetime
-    update_time:datetime
-    update_user:str
+    create_name:str | None = None
+    create_time:datetime | None =None
+    update_time:datetime | None =None
+    update_user:str | None = None
