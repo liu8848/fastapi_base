@@ -70,6 +70,7 @@ class Logger:
         logging.getLogger().handlers = [InterceptHandler()]
         for logger_name in LOGGER_NAMES:
             logging_logger = logging.getLogger(logger_name)
+            logging_logger.propagate=False
             logging_logger.handlers = [InterceptHandler()]
 
     def get_logger(self):
