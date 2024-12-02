@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from common.exception.exception_handler import register_exception
 from common.log.loguru_cofig import Loggers
 from core.conf import settings
+from core.crawl4ai.crawler_service import crawler_service
 from database.db_mysql import create_table
 
 
@@ -19,7 +20,11 @@ async def register_init(app: FastAPI):
     # 创建数据库表
     await create_table()
 
+    await crawler_service.start()
+
     yield
+
+    await crawler_service.stop()
 
 
 def register_app():
@@ -50,6 +55,15 @@ def register_app():
 def register_logger() -> None:
     """配置日志"""
     Loggers.init_config()
+
+def register_crawl4ai(app) -> None:
+    @app.on_event("startup")
+    async def startup_event():
+        await crawler_service.start()
+
+    @app.on_event("shutdown")
+    async def shutdown_event():
+        await crawler_service.stop()
 
 
 def register_middleware(app: FastAPI):
