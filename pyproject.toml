@@ -12,6 +12,7 @@ dependencies = [
     "alembic>=1.14.0",
     "asgi-correlation-id>=4.3.3",
     "asyncmy>=0.2.9",
+    "crawl4ai[all]>=0.3.746",
     "fastapi[all]==0.111.0",
     "loguru>=0.7.2",
     "msgspec>=0.18.6",
